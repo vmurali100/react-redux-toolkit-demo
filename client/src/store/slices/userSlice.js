@@ -19,6 +19,23 @@ export const addUserAsyncAction = createAsyncThunk(
   }
 );
 
+export const deleteUserAsyncAction =createAsyncThunk("users/deleteUserAsyncAction",async (user)=>{
+  const response = await fetch("http://localhost:3201/users/"+user.id,{
+    method:"DELETE"
+  })
+  return getAllUsersFromserver();
+})
+
+export const updateUserAsyncAction = createAsyncThunk("users/updateUserAsyncAction",async (user)=>{
+  const response = await fetch("http://localhost:3201/users/"+user.id,{
+    method:"PUT",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  return getAllUsersFromserver();
+})
 export const getUserDetailsAction = createAsyncThunk('users/getUserDetailsAction',()=>{
   return getAllUsersFromserver()
 })
@@ -38,7 +55,14 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUserDetailsAction.fulfilled,(state,action)=>{
       state.mainUsers = action.payload
+    });
+    builder.addCase(deleteUserAsyncAction.fulfilled,(state,action)=>{
+      state.mainUsers = action.payload
+    });
+    builder.addCase(updateUserAsyncAction.fulfilled,(state,action)=>{
+      state.mainUsers = action.payload
     })
+
   },
 });
 

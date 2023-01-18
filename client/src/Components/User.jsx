@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addUserAsyncAction,
+  deleteUserAsyncAction,
   getUserDetailsAction,
+  updateUserAsyncAction,
 } from "../store/slices/userSlice";
 
 const User = () => {
@@ -14,6 +16,7 @@ const User = () => {
     email: "",
     password: "",
   });
+  const [isEdit, setIsEdit] = useState(false);
 
   const dispatch = useDispatch();
   const { mainUsers } = useSelector((state) => state.users);
@@ -28,9 +31,30 @@ const User = () => {
     setUserDetails(newUser);
   };
   const handleSubmit = () => {
-    console.log(userDetails);
     dispatch(addUserAsyncAction(userDetails));
+    hanldeClear()
   };
+  const handleDelete = (usr) => {
+    dispatch(deleteUserAsyncAction(usr));
+  };
+  const editUser = (usr) => {
+    setUserDetails(usr);
+    setIsEdit(true);
+  };
+  const handleUpdate=()=>{
+    dispatch(updateUserAsyncAction(userDetails));
+    hanldeClear();
+    setIsEdit(false)
+  }
+
+  const hanldeClear = ()=>{
+    setUserDetails({
+      fname: "",
+      lname: "",
+      email: "",
+      password: "",
+    })
+  }
   return (
     <div className="container">
       <div className="row">
@@ -93,34 +117,68 @@ const User = () => {
               />
             </div>
 
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleSubmit}
-            >
-              Add User
-            </button>
+            {isEdit ? (
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleUpdate}
+              >
+                Update User
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleSubmit}
+              >
+                Add User
+              </button>
+            )}
           </form>
         </div>
         <div className="col-8">
           <table className="table">
             <thead>
               <tr>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Email</th>
+                <th>First</th>
+                <th>Last</th>
+                <th>Email</th>
                 <th>Password</th>
                 <th>ID</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {mainUsers.map((usr)=> <tr>
-                <td>{usr.fname}</td>
-                <td>{usr.lname}</td>
-                <td>{usr.email}</td>
-                <td>{usr.password}</td>
-                <td>{usr.id}</td>
-              </tr> )}
+              {mainUsers.map((usr) => (
+                <tr>
+                  <td>{usr.fname}</td>
+                  <td>{usr.lname}</td>
+                  <td>{usr.email}</td>
+                  <td>{usr.password}</td>
+                  <td>{usr.id}</td>
+                  <td>
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => {
+                        editUser(usr);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        handleDelete(usr);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

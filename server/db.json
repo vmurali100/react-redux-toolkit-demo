@@ -2,24 +2,31 @@
   "users": [
     {
       "fname": "Murali",
-      "lname": "Kumar",
+      "lname": "Krishna  Reddy",
       "email": "vmurali100@gmail.com",
       "password": "1234",
       "id": 1
     },
     {
       "fname": "Ram",
-      "lname": "Krishna",
+      "lname": "Krishna Kumar",
       "email": "vmurali100@gmail.com",
       "password": "123456",
       "id": 2
     },
     {
-      "fname": "Kiran",
-      "lname": "Kumar",
-      "email": "kiran@gmail.com",
-      "password": "112345",
+      "fname": "Ravi",
+      "lname": "Shankar",
+      "email": "ravi@gmail.com",
+      "password": "ravi123",
       "id": 3
+    },
+    {
+      "fname": "Sam VV",
+      "lname": "Sundar",
+      "email": "Sam@gmail.com",
+      "password": "1234",
+      "id": 4
     }
   ]
 }
